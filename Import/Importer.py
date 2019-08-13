@@ -3,6 +3,15 @@ import cv2
 import os
 import sys
 
+# Global variables:
+accept_list = ['.png', '.jpg', '.jpeg', '.bmp']
+#===================
+
+def valid_ext(fname):
+    ext = os.path.splitext(fname)[-1]
+    if ext in accept_list:
+        return True
+    return False
 
 def convert_to_square(image):
     if image.shape[0] < image.shape[1]:
@@ -22,15 +31,15 @@ def convert(main_image, im_size):
     return cv2.resize(sq, (im_size, im_size))
 
 def Importer(input_dir, output_dir, recursion=True, im_size=512, Gray=False):
-    accept_list = ['.png', '.jpg', '.jpeg', '.bmp']
+
+    gallery = []
 
     pnumber = 0
 
     if recursion==False:
         for file in os.listdir(input_dir):
 
-            ext = os.path.splitext(file)[-1]
-            if not ext.lower() in accept_list:
+            if not valid_ext(file):
                 continue
 
             fname = os.path.join(input_dir, file)
@@ -44,12 +53,12 @@ def Importer(input_dir, output_dir, recursion=True, im_size=512, Gray=False):
             pname = os.path.join(output_dir, 'pixel{}.jpg'.format(pnumber))
             pnumber += 1
             cv2.imwrite(pname, img)
+            gallery += [img]
     else:
         for root, subdirs, files in os.walk(input_dir):
             for file in files:
 
-                ext = os.path.splitext(file)[-1]
-                if not ext.lower() in accept_list:
+                if not valid_ext(file):
                     continue
 
                 fname = os.path.join(root, file)
@@ -63,10 +72,5 @@ def Importer(input_dir, output_dir, recursion=True, im_size=512, Gray=False):
                 pname = os.path.join(output_dir, 'pixel{}.jpg'.format(pnumber))
                 pnumber += 1
                 cv2.imwrite(pname, img)
-
-
-
-
-
-
-
+                gallery += [img]
+    return gallery
