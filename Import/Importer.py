@@ -25,13 +25,11 @@ def convert_to_square(image):
         i1 = i0+s
         return image[i0:i1,:,...]
 
-
 def convert(main_image, im_size):
     sq = convert_to_square(main_image)
     return cv2.resize(sq, (im_size, im_size))
 
 def Importer(input_dir, output_dir, recursion=True, im_size=512, Gray=False):
-
     gallery = []
 
     pnumber = 0
@@ -74,3 +72,8 @@ def Importer(input_dir, output_dir, recursion=True, im_size=512, Gray=False):
                 cv2.imwrite(pname, img)
                 gallery += [img]
     return gallery
+
+def pixel_image_error(img, pixarr):
+    pixarr = np.array(pixarr)
+    image = cv2.resize(img, pixar.shape)
+    return np.sum( np.square(pixarr - image)) // (pixarr.shape[0] * pixarr.shape[1])
