@@ -4,7 +4,7 @@ from sklearn.cluster import KMeans
 
 def pixel_image_error(img, pixarr):
     pixarr = np.array(pixarr)
-    image = cv2.resize(img, pixar.shape)
+    image = cv2.resize(img, (pixarr.shape[0],pixarr.shape[1]))
     return np.sum( np.square(pixarr - image)) // (pixarr.shape[0] * pixarr.shape[1])
 
 def img_to_features(img, patch_size=4):    
@@ -64,6 +64,13 @@ class Core:
             G += [best_img]
         return G
 
+    def estimate_size(self, target_pixel_size):
+        Hp = (self.img.shape[0] // self.window_size)
+        Wp = (self.img.shape[1] // self.window_size)
+        H = Hp * target_pixel_size
+        W = Wp * target_pixel_size
+        return H,W
+
     def build(self, gallery, target_pixel_size=64):
         G = self.find_best_matches(gallery, target_pixel_size)
 
@@ -72,9 +79,12 @@ class Core:
         H = Hp * target_pixel_size
         W = Wp * target_pixel_size
 
-        art = np.zeros((H,W))
+        if len(self.img.shape) > 2:
+            art = np.zeros((H,W,3))
+        else:
+            art = np.zeros((H, W))
 
-        for l in range(self.kmeans.labels_):
+        for l in range(len(self.kmeans.labels_)):
             L = self.kmeans.labels_[l]
             Gimg = G[L]
             
@@ -85,7 +95,7 @@ class Core:
             I = i * target_pixel_size
             J = j * target_pixel_size
 
-            art[ I:I+target_pixel_size, J:J+target_pixel_size ] = Gimg
+            art[I:I+target_pixel_size, J:J+target_pixel_size, ...] = Gimg
 
         return art
 
