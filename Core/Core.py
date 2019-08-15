@@ -44,6 +44,8 @@ class Core:
 
     def find_best_matches(self, gallery, target_size=4):
         G = []
+        error_sum = 0
+
         for i in range(len(self.kmeans.cluster_centers_)):
             best_img = gallery[0]
             emin = np.Inf
@@ -62,7 +64,8 @@ class Core:
 
             best_img = cv2.resize(best_img, (target_size, target_size))
             G += [best_img]
-        return G
+            error_sum += emin
+        return G, error_sum
 
     def estimate_size(self, target_pixel_size):
         Hp = (self.img.shape[0] // self.window_size)
@@ -72,7 +75,7 @@ class Core:
         return H,W
 
     def build(self, gallery, target_pixel_size=64):
-        G = self.find_best_matches(gallery, target_pixel_size)
+        G, esum = self.find_best_matches(gallery, target_pixel_size)
 
         Hp = (self.img.shape[0] // self.window_size)
         Wp = (self.img.shape[1] // self.window_size)
@@ -97,6 +100,5 @@ class Core:
 
             art[I:I+target_pixel_size, J:J+target_pixel_size, ...] = Gimg
 
-        return art
-
-
+        return art, esum
+    
