@@ -35,7 +35,15 @@ Examples usage:
 ```{r, engine='bash', count_lines} 
 python main.py -in ./input.jpg -out ./output.jpg -g ./Gallery/ -r True -s 256 -v True 
 ```
-This command, loads input.jpg and save the art image to output.jpg. It scans all files and folders inside ./Gallery/ recursively. Those scaned images are going to replace patches in the main image. It makes all scanned images into square images automatically, so you don't have to take care of that part. It also prints the process steps in system log. Argument -s 256 lets this program to scale up each patch of 8x8 pixels in the main image to be scaled up to 256x256 pixel. Some sample input and output: 
+This command, loads input.jpg and save the art image to output.jpg. It scans all files and folders inside ./Gallery/ recursively. Those scanned images are going to replace patches in the main image. It makes all scanned images into square images automatically, so you don't have to take care of that part. It also prints the process steps in system log. Argument `-s 256` lets this program to scale up each patch of 8x8 pixels in the main image to be scaled up to 256x256 pixel. Some sample input and output:
+
+![Output1](./Portfolio/Portfolio1.jpg)
+
+![Output2](./Portfolio/Portfolio2.jpg)
+
+
+## Author
+* [**Amin Aghaee**](https://github.com/aminrd/) 
 
  
 
