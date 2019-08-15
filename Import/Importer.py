@@ -73,7 +73,3 @@ def Importer(input_dir, output_dir, recursion=True, im_size=512, Gray=False):
                 gallery += [img]
     return gallery
 
-def pixel_image_error(img, pixarr):
-    pixarr = np.array(pixarr)
-    image = cv2.resize(img, pixar.shape)
-    return np.sum( np.square(pixarr - image)) // (pixarr.shape[0] * pixarr.shape[1])
