@@ -101,4 +101,3 @@ class Core:
             art[I:I+target_pixel_size, J:J+target_pixel_size, ...] = Gimg
 
         return art, esum
-    

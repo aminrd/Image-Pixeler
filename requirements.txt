@@ -1,3 +1,4 @@
 opencv-python>=4.1
 scikit-learn==0.21.3
 numpy>=1.17
+argparse>=1.4
