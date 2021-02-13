@@ -30,8 +30,8 @@ if __name__== "__main__":
                         )
     parser.add_argument('-di', '--diversity',
                         type=float,
-                        default=0.5,
-                        help='Diversity index showing how diverse the frames should be [0-1] lowest 0 and highest 1'
+                        default=0.25,
+                        help='Diversity index showing how diverse the frames should be [0-1] lowest 0 and highest 1. Suggested value = 0.25'
                         )
     args, leftovers = parser.parse_known_args()
 
@@ -52,9 +52,14 @@ if __name__== "__main__":
     while ret:
         bar.update()
         frame_thumbnail = cv2.resize(frame, t_size)
+
         # Check if the new frame is dis-similar to already selected frames
-        if len(selected_thumbnail) < 1 or\
-                all(sim(frame_thumbnail, f) < (1 - args.diversity) for f in selected_thumbnail):
+        if frame_thumbnail.max() > 1 and \
+            (len(selected_thumbnail) < 1 or\
+                all(sim(frame_thumbnail, f) < (1 - args.diversity) for f in selected_thumbnail)):
+
+            print(f"selected! {len(selected_thumbnail)}")
+
             selected_thumbnail.append(frame_thumbnail)
 
             file_path = os.path.join(args.output, f"{len(selected_thumbnail)}.jpg")
@@ -62,4 +67,5 @@ if __name__== "__main__":
 
         ret, frame = video.read()
 
+    video.release()
     print(f'{len(selected_thumbnail)} frames successfully saved in {args.output}')
