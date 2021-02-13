@@ -58,8 +58,6 @@ if __name__== "__main__":
             (len(selected_thumbnail) < 1 or\
                 all(sim(frame_thumbnail, f) < (1 - args.diversity) for f in selected_thumbnail)):
 
-            print(f"selected! {len(selected_thumbnail)}")
-
             selected_thumbnail.append(frame_thumbnail)
 
             file_path = os.path.join(args.output, f"{len(selected_thumbnail)}.jpg")

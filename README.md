@@ -41,6 +41,25 @@ This command, loads input.jpg and save the art image to output.jpg. It scans all
 
 ![Output2](./Portfolio/Portfolio2.jpg)
 
+## Video to Gallery
+If you don't have multiple images, and you want to capture many frames from the video and at the same time, you want to preserve the diversity of those captured images, you can use `gallery_generator.py`. 
+
+```shell
+usage: gallery_generator.py [-h] [-v VIDEO] [-o OUTPUT] [-di DIVERSITY]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v VIDEO, --video VIDEO
+                        Path to the file or a publicly available link to video
+  -o OUTPUT, --output OUTPUT
+                        Output directory to save frames selected diversely
+  -di DIVERSITY, --diversity DIVERSITY
+                        Diversity index showing how diverse the frames should
+                        be [0-1] lowest 0 and highest 1. Suggested value =
+                        0.25
+
+``` 
+![VideoGallery](./Portfolio/video_merged.jpg)
 
 ## Author
 * [**Amin Aghaee**](https://github.com/aminrd/) 
